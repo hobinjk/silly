@@ -8,19 +8,23 @@ function generatePoints() {
     points.push({
       x: 100 + Math.random() * 100,
       y: 100 + Math.random() * 100,
+      z: 0,
     });
     points.push({
       x: 300 + Math.random() * 100,
       y: 100 + Math.random() * 100,
+      z: 0,
     });
     points.push({
       x: 200 + Math.random() * 50,
       y: 300 + Math.random() * 50,
+      z: 0,
     });
     for (let j = 0; j < 3; j++) {
       points.push({
         x: Math.random() * width,
         y: Math.random() * height,
+        z: 0,
       });
     }
   }
@@ -29,11 +33,14 @@ function generatePoints() {
 
 function distance(a, b) {
   return Math.sqrt((a.x - b.x) * (a.x - b.x) +
-    (a.y - b.y) * (a.y - b.y));
+    (a.y - b.y) * (a.y - b.y) +
+    (a.z - b.z) * (a.z - b.z));
 }
 
 function distanceSquared(a, b) {
-  return (a.x - b.x) * (a.x - b.x) + (a.y - b.y) * (a.y - b.y);
+  return (a.x - b.x) * (a.x - b.x) +
+    (a.y - b.y) * (a.y - b.y) +
+    (a.z - b.z) * (a.z - b.z);
 }
 
 function getCluster(centers, point) {
@@ -53,6 +60,7 @@ function getCluster(centers, point) {
 function getClusterCenter(cluster, points) {
   let x = 0;
   let y = 0;
+  let z = 0;
   let count = 0;
   for (let point of points) {
     if (point.cluster !== cluster) {
@@ -60,11 +68,13 @@ function getClusterCenter(cluster, points) {
     }
     x += point.x;
     y += point.y;
+    z += point.z;
     count += 1;
   }
   return {
     x: x / count,
     y: y / count,
+    z: z / count,
   };
 }
 
@@ -109,6 +119,7 @@ function kMeans(k, points) {
     centers.push({
       x: point.x,
       y: point.y,
+      z: point.z,
     });
   }
 
